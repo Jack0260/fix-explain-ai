@@ -26,7 +26,7 @@ function Spark({ data }: { data: number[] }) {
   );
 }
 
-function Code({ code, other, mark }: { code: string; other?: string; mark: "bad" | "good" }) {
+function Code({ code, other, mark }: { code: string; other?: string | undefined; mark: "bad" | "good" }) {
   const o = other?.split("\n") ?? [];
   return (
     <pre className="panel overflow-x-auto p-4 text-sm leading-6">
@@ -40,7 +40,7 @@ function Code({ code, other, mark }: { code: string; other?: string; mark: "bad"
 }
 
 function Index() {
-  const [pid, setPid] = useState(PROGRAMS[0].id);
+  const [pid, setPid] = useState(PROGRAMS[0]!.id);
   const [results, setResults] = useState<Record<string, RepairResult>>({});
   const Q = useRef<QTable>({});
   const p = PROGRAMS.find((x) => x.id === pid)!;
@@ -71,7 +71,7 @@ function Index() {
             <button key={x.id} onClick={() => setPid(x.id)} className={`tab ${x.id === pid ? "tab-active" : ""}`}>
               <span className="font-mono text-sm">{x.name}</span>
               <span className="text-xs text-muted-foreground">{x.description}</span>
-              {results[x.id] && <span className={`mt-1 font-mono text-xs ${results[x.id].finalRate === 1 ? "text-success" : "text-destructive"}`}>{Math.round(results[x.id].finalRate * 100)}% pass</span>}
+              {results[x.id] && <span className={`mt-1 font-mono text-xs ${results[x.id]!.finalRate === 1 ? "text-success" : "text-destructive"}`}>{Math.round(results[x.id]!.finalRate * 100)}% pass</span>}
             </button>
           ))}
           <div className="panel mt-4 p-3 font-mono text-xs">
@@ -102,8 +102,8 @@ function Index() {
               {p.tests.map((t, i) => (
                 <div key={i} className="flex flex-wrap gap-x-4">
                   <span>{p.fn}({t.args.map((a) => JSON.stringify(a)).join(", ")}) → {JSON.stringify(t.expected)}</span>
-                  <span className={before.results[i].ok ? "text-success" : "text-destructive"}>before: {before.results[i].got}</span>
-                  {after && <span className={after.results[i].ok ? "text-success" : "text-destructive"}>after: {after.results[i].got}</span>}
+                  <span className={before.results[i]!.ok ? "text-success" : "text-destructive"}>before: {before.results[i]!.got}</span>
+                  {after && <span className={after.results[i]!.ok ? "text-success" : "text-destructive"}>after: {after.results[i]!.got}</span>}
                 </div>
               ))}
             </div>

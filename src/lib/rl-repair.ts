@@ -121,7 +121,7 @@ export function repair(p: Program, Q: QTable, episodes = 40, alpha = 0.3, gamma 
       const cands = candidates(code);
       if (!cands.length) break;
       const explore = rand() < eps;
-      const a = explore ? cands[Math.floor(rand() * cands.length)] : cands.reduce((x, y) => ((Q[key(code, y)] ?? 0) > (Q[key(code, x)] ?? 0) ? y : x));
+      const a = explore ? cands[Math.floor(rand() * cands.length)]! : cands.reduce((x, y) => ((Q[key(code, y)] ?? 0) > (Q[key(code, x)] ?? 0) ? y : x));
       const rb = score(code, p).rate;
       const next = apply(code, a).code;
       const ra = score(next, p).rate;
@@ -152,7 +152,7 @@ export function repair(p: Program, Q: QTable, episodes = 40, alpha = 0.3, gamma 
     const ra = score(res.code, p).rate;
     const r = reward(rb, ra, a.id);
     if (ra < rb) { log.push(`[policy] rejected ${a.id} (reward ${r.toFixed(2)})`); continue; }
-    steps.push({ action: a, before: res.before, after: res.after, reward: r, rateBefore: rb, rateAfter: ra, q: Q[a.id], explored: false });
+    steps.push({ action: a, before: res.before, after: res.after, reward: r, rateBefore: rb, rateAfter: ra, q: Q[a.id] ?? 0, explored: false });
     log.push(`[policy] apply ${a.id} → tests ${Math.round(rb * 100)}% → ${Math.round(ra * 100)}%  r=${r.toFixed(2)}`);
     code = res.code;
   }
