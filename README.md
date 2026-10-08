@@ -1,14 +1,18 @@
-# Welcome to your Lovable project
+# IntelliFix AI
+
+Design a compiler that automatically rewrites buggy code using reinforcement learning. It should explain each fix in human-readable terms. Demonstrate with small buggy programs and show repaired outputs with reasoning logs.
 
 This project was built with [Lovable](https://lovable.dev).
 
+**Live app**: https://fix-explain-ai.lovable.app
+
 ## Build with Lovable
 
-Open your project in the [Lovable editor](https://lovable.dev) and keep building.
+Continue developing this project in the [Lovable editor](https://lovable.dev/projects/1331f42d-a13d-4bb4-9f6d-2e76c60ac4b7).
 
 - **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: connect the project to GitHub and every change made in Lovable is committed straight to your repository.
-- **Full ownership**: this code is yours. Push to your repository and your changes sync back into Lovable, ready for your next prompt.
+- **Stay in sync**: every change made in Lovable is committed straight to this repository.
+- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
 
 ## Development
 
@@ -20,10 +24,3 @@ cd <repository-name>
 npm i
 npm run dev
 ```
-
-## Built with
-
-- TanStack Start
-- TypeScript
-- React
-- Tailwind CSS
