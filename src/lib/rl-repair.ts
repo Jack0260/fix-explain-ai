@@ -130,7 +130,7 @@ export function repair(p: Program, Q: QTable, episodes = 40, alpha = 0.3, gamma 
       const k = key(code, a);
       Q[k] = (Q[k] ?? 0) + alpha * (r + (ra === 1 ? 0 : gamma * nextBest) - (Q[k] ?? 0));
       total += r;
-      if (r < 0) { /* revert harmful edits: agent keeps exploring from previous state */ } else code = next;
+      if (ra >= rb) code = next; // revert edits that break tests
       if (ra === 1 && r >= 0) break;
     }
     episodeRewards.push(total);
@@ -151,7 +151,7 @@ export function repair(p: Program, Q: QTable, episodes = 40, alpha = 0.3, gamma 
     const res = apply(code, a);
     const ra = score(res.code, p).rate;
     const r = reward(rb, ra, a.id);
-    if (r < 0) { log.push(`[policy] rejected ${a.id} (reward ${r.toFixed(2)})`); continue; }
+    if (ra < rb) { log.push(`[policy] rejected ${a.id} (reward ${r.toFixed(2)})`); continue; }
     steps.push({ action: a, before: res.before, after: res.after, reward: r, rateBefore: rb, rateAfter: ra, q: Q[a.id], explored: false });
     log.push(`[policy] apply ${a.id} → tests ${Math.round(rb * 100)}% → ${Math.round(ra * 100)}%  r=${r.toFixed(2)}`);
     code = res.code;
